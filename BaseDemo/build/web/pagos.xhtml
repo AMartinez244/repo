@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Conceptos de pago</ui:define>
+    <ui:define name="viewname">  
+        <li><p:link outcome="/principal">Conceptos de pago</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frmPrincipal">
+            <p:growl id="messages" showDetail="false"/>
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <div class="card">
+                        <div class="EmptyBox5"/>
+                        <p:commandButton value="Agregar" icon="fa fa-plus" actionListener="#{pagosBean.mantenimientoPagos(0,0,true)}"  oncomplete="PF('dlgPag').show();" update="frmPag"  styleClass="Fright Fs14"/>
+                        <p:commandButton title="Descargar en formato Excel" ajax="false" value="Descargar en Excel" styleClass="Fright Fs14" icon="fa fa-file-excel-o Fs14" style="margin-right: 1%!important">
+                            <p:dataExporter type="xls" target="dt_pag" fileName="Pagos"/>
+                        </p:commandButton>
+                        <div class="EmptyBox5"/>
+                        <p:dataTable id="dt_pag" widgetVar="dt_pag" value="#{pagosBean.conceptos}" var="a" rows="30" paginator="true" paginatorPosition="bottom" emptyMessage="No hay datos registrados." >
+                            <p:column width="6%" filterBy="#{a.idconceptopago}" filterMatchMode="contains" >
+                                <f:facet name="header">
+                                    <p:outputLabel value="ID" styleClass="Fs12"/>
+                                </f:facet>
+                                <p:outputLabel  value="#{a.idconceptopago}" styleClass="Fs14 "/>
+                            </p:column>
+                            <p:column filterBy="#{a.descripcion}" filterMatchMode="contains"  >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Descripción" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.descripcion}"  styleClass="Fs14"/>
+                            </p:column>
+<!--                            <p:column width="15%" filterBy="#{a.estado}" filterMatchMode="contains"  >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Estado" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.estado}"  styleClass="Fs14"/>
+                            </p:column>-->
+                            <p:column width="25%">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Creado por" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.creador} el #{a.fechacreacion}"  styleClass="Fs14"/>
+                            </p:column>
+                            <p:column width="10%" style="text-align: center">
+                                <p:commandButton value="Editar" title="Editar"  icon="fa fa-pencil" actionListener="#{pagosBean.mantenimientoPagos(2,a.idconceptopago,true)}"  oncomplete="PF('dlgPag').show(); " update="frmPag" styleClass="Fs12"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <p:dialog widgetVar="dlgPag" modal="true" width="80%"  position="top" resizable="false" responsive="true" closeOnEscape="true" dynamic="true">
+            <f:facet name="header">
+                <p:outputLabel value="Concepto de pago" styleClass="Fs14"/>
+            </f:facet>
+            <h:form id="frmPag">
+                <h:panelGrid columns="1"  styleClass="Wid100">
+                    <h:panelGroup>
+                        <p:outputLabel value="Descripción: " styleClass="Fs14 "/><br/>
+                        <p:inputText value="#{pagosBean.conceptoPago.descripcion}" styleClass="Fs14 Wid100"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <p:commandButton value="Guardar" title="Guardar" actionListener="#{pagosBean.mantenimientoPagos(1,0,true)}" update="frmPrincipal:messages frmPrincipal frmPrincipal:dt_pag " rendered="#{pagosBean.conceptoPago.idconceptopago eq null}" styleClass="Fright"/>
+                <p:commandButton value="Actualizar" title="Actualizar" actionListener="#{pagosBean.mantenimientoPagos(3,0,true)}" update="frmPrincipal:messages frmPrincipal frmPrincipal:dt_pag " rendered="#{pagosBean.conceptoPago.idconceptopago!=null}" styleClass="Fright" />
+                <p:commandButton value="Eliminar" title="Eliminar" actionListener="#{pagosBean.mantenimientoPagos(3,0,false)}" update="frmPrincipal:messages frmPrincipal frmPrincipal:dt_pag " rendered="#{pagosBean.conceptoPago.idconceptopago!=null}" styleClass="Fright RedButton" style="margin-right: 1%;">
+                    <p:confirm header="Confirmación" message="¿Está seguro/a que desea eliminar este registro?"  />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="400">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"/>
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes"/>
+                </p:confirmDialog>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

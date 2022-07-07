@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/31/2021 12:52:16 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="idac.siaga.pojos.Administradordetareaslog" table="administradordetareaslog" catalog="siaga">
+        <id name="idadministradordetareaslog" type="java.lang.Integer">
+            <column name="idadministradordetareaslog" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="administradordetareas" class="idac.siaga.pojos.Administradordetareas" fetch="select">
+            <column name="idadministradortareas" not-null="true" />
+        </many-to-one>
+        <property name="fechadeejecucioninicial" type="timestamp">
+            <column name="fechadeejecucioninicial" length="19" not-null="true" />
+        </property>
+        <property name="fechadeejecucionfinal" type="timestamp">
+            <column name="fechadeejecucionfinal" length="19" not-null="true" />
+        </property>
+        <set name="mensajesesForIdadministradortareaslogcreador" inverse="true">
+            <key>
+                <column name="idadministradortareaslogcreador" not-null="true" />
+            </key>
+            <one-to-many class="idac.siaga.pojos.Mensajes" />
+        </set>
+        <set name="mensajesesForIdadministradortareaslogenviomail" inverse="true">
+            <key>
+                <column name="idadministradortareaslogenviomail" />
+            </key>
+            <one-to-many class="idac.siaga.pojos.Mensajes" />
+        </set>
+    </class>
+</hibernate-mapping>

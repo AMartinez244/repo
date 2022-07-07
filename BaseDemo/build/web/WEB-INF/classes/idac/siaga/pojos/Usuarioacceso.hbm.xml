@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/31/2021 12:13:55 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="idac.siaga.pojos.Usuarioacceso" table="usuarioacceso" catalog="siaga">
+        <id name="idusuarioacceso" type="java.lang.Integer">
+            <column name="idusuarioacceso" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="usuarios" class="idac.siaga.pojos.Usuarios" fetch="select">
+            <column name="idusuario" />
+        </many-to-one>
+        <property name="idciudadano" type="java.lang.Integer">
+            <column name="idciudadano" />
+        </property>
+        <property name="idsistema" type="int">
+            <column name="idsistema" not-null="true" />
+        </property>
+        <property name="fallido" type="boolean">
+            <column name="fallido" not-null="true">
+                <comment>0=No 1=Si</comment>
+            </column>
+        </property>
+        <property name="ip" type="string">
+            <column name="ip" length="250" not-null="true" />
+        </property>
+        <property name="fechaacceso" type="timestamp">
+            <column name="fechaacceso" length="19" not-null="true" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" length="250" />
+        </property>
+        <property name="idusuarioexpediente" type="java.lang.Integer">
+            <column name="idusuarioexpediente" />
+        </property>
+        <property name="habilitado" type="boolean">
+            <column name="habilitado" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

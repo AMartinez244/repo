@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 6, 2022 9:15:07 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.cheques.pojos.Cheques" table="cheques" catalog="DCmoney">
+        <id name="idcheques" type="java.lang.Integer">
+            <column name="idcheques" />
+            <generator class="identity" />
+        </id>
+        <property name="idproveedor" type="int">
+            <column name="idproveedor" not-null="true" />
+        </property>
+        <property name="monto" type="big_decimal">
+            <column name="monto" precision="12" not-null="true" />
+        </property>
+        <property name="fecharegistro" type="date">
+            <column name="fecharegistro" length="10" not-null="true" />
+        </property>
+        <property name="estado" type="java.lang.Integer">
+            <column name="estado" not-null="true" />
+        </property>
+        <property name="cuentarelacionada" type="int">
+            <column name="cuentarelacionada" not-null="true" />
+        </property>
+        <property name="idcreo" type="java.lang.Integer">
+            <column name="idcreo" not-null="true" />
+        </property>
+        <property name="fechacreacion" type="timestamp">
+            <column name="fechacreacion" not-null="true" />
+        </property>
+        <property name="habilitado" type="boolean">
+            <column name="habilitado" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

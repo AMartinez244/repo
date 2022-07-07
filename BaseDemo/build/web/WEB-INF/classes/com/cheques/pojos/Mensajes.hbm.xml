@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/31/2021 12:52:16 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="idac.siaga.pojos.Mensajes" table="mensajes" catalog="siaga">
+        <id name="idmensaje" type="java.lang.Integer">
+            <column name="idmensaje" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="administradordetareaslogByIdadministradortareaslogenviomail" class="idac.siaga.pojos.Administradordetareaslog" fetch="select">
+            <column name="idadministradortareaslogenviomail" />
+        </many-to-one>
+        <many-to-one name="administradordetareaslogByIdadministradortareaslogcreador" class="idac.siaga.pojos.Administradordetareaslog" fetch="select">
+            <column name="idadministradortareaslogcreador" not-null="true" />
+        </many-to-one>
+        <property name="asunto" type="string">
+            <column name="asunto" length="6000" not-null="true" />
+        </property>
+        <property name="contenido" type="string">
+            <column name="contenido" length="16777215" not-null="true" />
+        </property>
+        <property name="fechacreacion" type="timestamp">
+            <column name="fechacreacion" length="19" />
+        </property>
+        <property name="idcreador" type="int">
+            <column name="idcreador" not-null="true" />
+        </property>
+        <property name="nivelprioridad" type="int">
+            <column name="nivelprioridad" not-null="true">
+                <comment>1= baja, 2 = media, 3 = alta</comment>
+            </column>
+        </property>
+        <property name="tabla" type="string">
+            <column name="tabla" length="55" not-null="true" />
+        </property>
+        <property name="idllave" type="string">
+            <column name="idllave" length="55" not-null="true" />
+        </property>
+        <property name="valorllave" type="int">
+            <column name="valorllave" not-null="true" />
+        </property>
+        <property name="idmensajeanterior" type="java.lang.Integer">
+            <column name="idmensajeanterior" />
+        </property>
+        <property name="destinatarios" type="string">
+            <column name="destinatarios" length="65535" not-null="true" />
+        </property>
+        <property name="iddestinatarios" type="string">
+            <column name="iddestinatarios" length="65535" not-null="true" />
+        </property>
+        <property name="leido" type="boolean">
+            <column name="leido" not-null="true" />
+        </property>
+        <property name="enviado" type="boolean">
+            <column name="enviado" not-null="true" />
+        </property>
+        <property name="habilitado" type="boolean">
+            <column name="habilitado" not-null="true" />
+        </property>
+        <property name="generadopor" type="string">
+            <column name="generadopor" length="250" not-null="true" />
+        </property>
+        <property name="asuntoexterno" type="string">
+            <column name="asuntoexterno" length="6000" />
+        </property>
+        <property name="poseeadjuntos" type="boolean">
+            <column name="poseeadjuntos" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

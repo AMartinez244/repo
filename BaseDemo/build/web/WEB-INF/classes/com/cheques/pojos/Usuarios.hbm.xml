@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/31/2021 12:13:55 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="idac.siaga.pojos.Usuarios" table="usuarios" catalog="siaga">
+        <id name="idusuario" type="java.lang.Integer">
+            <column name="idusuario" />
+            <generator class="identity" />
+        </id>
+        <property name="idempleadoidac" type="java.lang.Integer">
+            <column name="idempleadoidac" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" not-null="true" unique="true">
+                <comment>Describe el nombre de usuario</comment>
+            </column>
+        </property>
+        <property name="clave" type="string">
+            <column name="clave" length="50">
+                <comment>Describe la clave de usuario</comment>
+            </column>
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true">
+                <comment>Describe el nombre</comment>
+            </column>
+        </property>
+        <property name="apellidos" type="string">
+            <column name="apellidos" length="50" not-null="true">
+                <comment>Describe el apellido de usuario</comment>
+            </column>
+        </property>
+        <property name="area" type="int">
+            <column name="area" not-null="true">
+                <comment>Describe el &#225;rea en la que se desempe&#241;a el usuario</comment>
+            </column>
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="50">
+                <comment>Describe el t&#233;lefono en que se desempe&#241;a el usuario</comment>
+            </column>
+        </property>
+        <property name="mail" type="string">
+            <column name="mail" length="300" unique="true">
+                <comment>Define el mail del usuario</comment>
+            </column>
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="50">
+                <comment>Define la direccion del usuario</comment>
+            </column>
+        </property>
+        <property name="secreto" type="string">
+            <column name="secreto" length="250" />
+        </property>
+        <property name="habilitado" type="boolean">
+            <column name="habilitado" not-null="true">
+                <comment>1= activo 0= inactivo</comment>
+            </column>
+        </property>
+        <property name="fechacreacion" type="timestamp">
+            <column name="fechacreacion" length="19" />
+        </property>
+        <property name="fechamodificacion" type="timestamp">
+            <column name="fechamodificacion" length="19" />
+        </property>
+        <property name="idcreador" type="java.lang.Integer">
+            <column name="idcreador" />
+        </property>
+        <property name="idmodifico" type="java.lang.Integer">
+            <column name="idmodifico" />
+        </property>
+        <property name="iddocumentosoporte" type="java.lang.Integer">
+            <column name="iddocumentosoporte" />
+        </property>
+        <property name="proximocambiocontrasena" type="date">
+            <column name="proximocambiocontrasena" length="10" />
+        </property>
+        <property name="extension" type="string">
+            <column name="extension" length="30" />
+        </property>
+        <property name="celular" type="string">
+            <column name="celular" length="30" />
+        </property>
+        <property name="mailalterno" type="string">
+            <column name="mailalterno" length="500" />
+        </property>
+        <property name="idusuariofirma" type="java.lang.Integer">
+            <column name="idusuariofirma" />
+        </property>
+        <property name="titulo" type="string">
+            <column name="titulo" length="250" />
+        </property>
+        <property name="siglasparacarta" type="string">
+            <column name="siglasparacarta" length="10" />
+        </property>
+        <set name="usuarioaccesos" inverse="true">
+            <key>
+                <column name="idusuario" />
+            </key>
+            <one-to-many class="idac.siaga.pojos.Usuarioacceso" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03/31/2021 12:52:16 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="idac.siaga.pojos.Administradordetareas" table="administradordetareas" catalog="siaga">
+        <id name="idadministradordetareas" type="java.lang.Integer">
+            <column name="idadministradordetareas" />
+            <generator class="identity" />
+        </id>
+        <property name="descripciondelatarea" type="string">
+            <column name="descripciondelatarea" not-null="true" />
+        </property>
+        <property name="objetivo" type="string">
+            <column name="objetivo" length="65535" not-null="true" />
+        </property>
+        <property name="tipodehorario" type="int">
+            <column name="tipodehorario" not-null="true">
+                <comment>-1 = Minutos programados en el sistema 0 = Se ejecuta a solicitud de usuario, 1 = Hora unica de dia, 2= Horarios detallados, 3= Horario
+                Especifico.</comment>
+            </column>
+        </property>
+        <property name="tiempodetimer" type="java.lang.Integer">
+            <column name="tiempodetimer" />
+        </property>
+        <property name="nombredelmetodo" type="string">
+            <column name="nombredelmetodo" not-null="true" unique="true" />
+        </property>
+        <property name="horariounico" type="time">
+            <column name="horariounico" length="8" />
+        </property>
+        <property name="tiempoestimado" type="time">
+            <column name="tiempoestimado" length="8" />
+        </property>
+        <property name="habilitado" type="boolean">
+            <column name="habilitado" not-null="true" />
+        </property>
+        <property name="fechaespecifica" type="timestamp">
+            <column name="fechaespecifica" length="19" />
+        </property>
+        <set name="administradordetareaslogs" inverse="true">
+            <key>
+                <column name="idadministradortareas" not-null="true" />
+            </key>
+            <one-to-many class="idac.siaga.pojos.Administradordetareaslog" />
+        </set>
+    </class>
+</hibernate-mapping>

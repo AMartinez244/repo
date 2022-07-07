@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+    <div class="layout-topbar">
+        <h:link outcome="/principal" styleClass="layout-topbar-logo">
+
+        </h:link>
+
+        <a class="layout-menu-button" href="#">
+            <i class="fa fa-bars" />
+        </a>
+
+        <a id="topbar-menu-button">
+            <i class="fa fa-arrow-left Fs30" onclick="history.back();"></i>
+        </a>
+
+
+        <ul class="topbar-menu fadeInDown">
+            <li>
+                <a href="#">
+                    <i class="topbar-icon fa fa-fw fa-cog"></i>
+                    <span class="topbar-item-name">Configuración</span>
+                </a>
+                <ul>
+                    <li role="menuitem" style="#{loginBean.usuarioLogueado.tipologin? '' : 'display: none'}">
+                        <a onclick="window.open('#{conf.cambiar_contrasena}#{loginBean.usuarioLogueado.cambiocontrasenasiaga}','_blank');" style="cursor: pointer;">
+                            <i class="fa fa-fw fa-refresh"></i>
+                            <span>Cambiar contraseña</span>
+                        </a>
+                    </li>
+                    <li role="menuitem" style="#{loginBean.usuarioLogueado.tipologin? 'display: none' : ''}">
+                        <a onclick="window.open('#{conf.cambiar_contrasena}#{loginBean.usuarioLogueado.cambiocontrasenaad}','_blank');" style="cursor: pointer;">
+                            <i class="fa fa-fw fa-refresh"></i>
+                            <span>Cambiar contraseña</span>
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <h:form>
+                            <p:commandLink  action="#{loginBean.cerrarSesion()}">
+                                <i class="fa fa-fw fa-power-off"></i>
+                                <span>Cerrar sesión</span>
+                            </p:commandLink>     
+                        </h:form>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="ShowOnDesktop">
+                <a onclick="window.open('#{conf.soporte}#{loginBean.usuarioLogueado.linksoporte}','_blank');" style="cursor: pointer;">
+                    <i class="topbar-icon fa fa-support"></i>
+                    <span class="topbar-item-name">Centro de Soporte Virtual</span>
+                </a>
+
+            </li>
+
+            <li class="ShowOnDesktop">
+                <a onclick="window.open('#{conf.mensajes}#{loginBean.usuarioLogueado.linkmensajes}','_blank');" style="cursor: pointer;">
+                    <i class="topbar-icon fa fa-fw fa-inbox"></i>
+                    <span class="topbar-item-name">Mensajes SIAGA</span>
+                    <span class="topbar-badge">#{loginBean.usuarioLogueado.noleido}</span>
+                </a>
+
+            </li>
+
+            <ui:fragment>
+                <li class="user-profile ShowOnDesktop">
+
+                    <a onclick="window.open('#{conf.empleados}#{loginBean.usuarioLogueado.linkmensajes}','_blank');" style="cursor: pointer;">
+                        <p:graphicImage value="Download?dato=#{loginBean.usuarioLogueado.fotoempleado}" height="40px" width="60px" style="margin-top: 2px;border-radius: 50%;overflow: hidden;" title="#{loginBean.usuarioLogueado.nombre} #{loginBean.usuarioLogueado.apellidos}"/>
+                        <span class="topbar-item-name">#{loginBean.usuarioLogueado.nombre} #{loginBean.usuarioLogueado.apellidos}</span>
+                    </a>
+                    
+                </li>
+            </ui:fragment>            
+        </ul>
+    </div>
+</ui:composition>

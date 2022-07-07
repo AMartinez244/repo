@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 6, 2022 9:15:07 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.cheques.pojos.Proveedor" table="proveedor" catalog="DCmoney">
+        <id name="idproveedor" type="java.lang.Integer">
+            <column name="idproveedor" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="500" not-null="true" />
+        </property>
+        <property name="tipopersona" type="java.lang.Integer">
+            <column name="tipopersona" not-null="true">
+                <comment>0=fisica 1=juridica</comment>
+            </column>
+        </property>
+        <property name="identificacion" type="string">
+            <column name="identificacion" length="250" not-null="true" />
+        </property>
+        <property name="balance" type="big_decimal">
+            <column name="balance" precision="12" not-null="true" />
+        </property>
+        <property name="cuentacontable" type="int">
+            <column name="cuentacontable" not-null="true" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" />
+        </property>
+        <property name="idcreo" type="java.lang.Integer">
+            <column name="idcreo" not-null="true" />
+        </property>
+        <property name="fechacreacion" type="timestamp">
+            <column name="fechacreacion" not-null="true" />
+        </property>
+        <property name="habilitado" type="boolean">
+            <column name="habilitado" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

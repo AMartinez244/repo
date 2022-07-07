@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Registro de solicitud de cheques</ui:define>
+    <ui:define name="viewname">  
+        <li><p:link outcome="/principal">Registro de solicitud de cheques</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frmPrincipal">
+            <p:growl id="messages" showDetail="false"/>
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <div class="card">
+                        <div class="EmptyBox5"/>
+                        <p:commandButton value="Agregar" icon="fa fa-plus" actionListener="#{solicitudBean.mantenimientoSolicitud(0,0,true)}"  oncomplete="PF('dlgPro').show();" update="frmPro"  styleClass="Fright Fs14"/>
+                        <p:commandButton title="Descargar en formato Excel" ajax="false" value="Descargar en Excel" styleClass="Fright Fs14" icon="fa fa-file-excel-o Fs14" style="margin-right: 1%!important">
+                            <p:dataExporter type="xls" target="dt_pro" fileName="Proveedores"/>
+                        </p:commandButton>
+
+                        <div class="EmptyBox5"/>
+                        <p:dataTable id="dt_pro" widgetVar="dt_pro" value="#{solicitudBean.solicitudes}" var="a" rows="30" paginator="true" paginatorPosition="bottom" emptyMessage="No hay datos registrados." >
+
+                            <p:column width="6%" filterBy="#{a.idcheques}" filterMatchMode="contains" >
+                                <f:facet name="header">
+                                    <p:outputLabel value="ID" styleClass="Fs12"/>
+                                </f:facet>
+                                <p:outputLabel  value="#{a.idcheques}" styleClass="Fs14 "/>
+                            </p:column>
+
+                            <p:column filterBy="#{a.proveedor}" filterMatchMode="contains"  >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Proveedor" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.proveedor}"  styleClass="Fs14"/>
+                            </p:column>
+                            <p:column width="15%" >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Monto" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.monto}"  styleClass="Fs14"/>
+                            </p:column>
+                            <p:column sortBy="#{a.fecharegistro}" >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Fecha registro" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.fecharegistro}"  styleClass="Fs14"/>
+                            </p:column>
+                            <p:column width="15%" filterBy="#{a.estado}" filterMatchMode="contains"  >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Estado" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.estado}"  styleClass="Fs14"/>
+                            </p:column>
+                            <p:column width="13%" filterBy="#{a.cuentarelacionada}" filterMatchMode="contains"  >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Cta. contable relacionada con la Cta. corriente en banco" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.cuentacontable}"  styleClass="Fs14"/>
+                            </p:column>
+                            <p:column width="13%">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Creado por" styleClass="Fs12"/>
+                                </f:facet>
+                                <h:outputText value="#{a.creador} el #{a.fechacreacion}"  styleClass="Fs14"/>
+                            </p:column>
+                            <p:column width="10%" style="text-align: center">
+                                <p:commandButton value="Editar" title="Editar" icon="fa fa-pencil" actionListener="#{solicitudBean.mantenimientoSolicitud(2,a.idcheques,true)}"  oncomplete="PF('dlgPro').show(); " update="frmPro" styleClass="Fs12"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <p:dialog widgetVar="dlgPro" modal="true" width="98%"  position="top" resizable="false" responsive="true" closeOnEscape="true" dynamic="true">
+            <f:facet name="header">
+                <p:outputLabel value="Proveedor" styleClass="Fs14"/>
+            </f:facet>
+            <h:form id="frmPro">
+                <h:panelGrid columns="2" styleClass="Wid100" columnClasses="Wid30, Wid30, Wid30">
+                    <h:panelGroup>
+                        <p:outputLabel value="Proveedor: " styleClass="Fs14 "/><br/>
+                        <p:selectOneMenu value="#{solicitudBean.cheques.idproveedor}" filter="true" filterMatchMode="contains" styleClass="Wid90" style="max-width: 100%; min-width: 100%;">
+                            <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{solicitudBean.proveedores}"/>
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:outputLabel value="Cuenta Contable relacionada con la cuenta corriente en banco: " styleClass="Fs14 "/><br/>
+                        <p:inputNumber value="#{solicitudBean.cheques.cuentarelacionada}" decimalPlaces="0"  styleClass="Fs14 Wid100"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="2" styleClass="Wid100" columnClasses="Wid30, Wid30, Wid40">
+                    <h:panelGroup>
+                        <p:outputLabel value="Fecha de registro: " styleClass="Fs14 "/><br/>
+                        <p:calendar value="#{solicitudBean.cheques.fecharegistro}" pattern="dd/MM/yyyy" styleClass="Fs14 Wid100"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <p:outputLabel value="Monto: " styleClass="Fs14 "/><br/>
+                        <p:inputNumber value="#{solicitudBean.cheques.monto}" decimalPlaces="2"  styleClass="Fs14 Wid100"/>
+                    </h:panelGroup>
+
+
+                </h:panelGrid>
+                <p:commandButton value="Guardar" title="Guardar" actionListener="#{solicitudBean.mantenimientoSolicitud(1,1,true)}" update="frmPrincipal:messages frmPrincipal frmPrincipal:dt_pro " rendered="#{solicitudBean.cheques.idcheques eq null}" styleClass="Fright"/>
+                <p:commandButton value="Actualizar" title="Actualizar" actionListener="#{solicitudBean.mantenimientoSolicitud(3,1,true)}" update="frmPrincipal:messages frmPrincipal frmPrincipal:dt_pro " rendered="#{solicitudBean.cheques.idcheques!=null}" styleClass="Fright"  style="#{solicitudBean.cheques.estado==1?'':'display:none'};"/>
+                <p:commandButton value="Eliminar" title="Eliminar" actionListener="#{solicitudBean.mantenimientoSolicitud(3,0,false)}" update="frmPrincipal:messages frmPrincipal frmPrincipal:dt_pro " rendered="#{solicitudBean.cheques.idcheques!=null}" styleClass="Fright RedButton" style="#{solicitudBean.cheques.estado==1?'':'display:none'}; margin-right: 1%;">
+                    <p:confirm header="Confirmación" message="¿Está seguro/a que desea eliminar este registro?"  />
+                </p:commandButton>
+                <p:commandButton value="Anular solicitud" title="Anular solicitud" actionListener="#{solicitudBean.mantenimientoSolicitud(3,0,true)}" update="frmPrincipal:messages frmPrincipal frmPrincipal:dt_pro " rendered="#{solicitudBean.cheques.idcheques!=null}" style="#{solicitudBean.cheques.estado==1?'':'display:none'}; margin-right: 1%;" styleClass="Fright ">
+                    <p:confirm header="Confirmación" message="¿Está seguro/a que desea eliminar anular esta solicitud?"  />
+                </p:commandButton>
+                  <p:commandButton value="Generar cheque" title="Generar cheque" actionListener="#{solicitudBean.mantenimientoSolicitud(3,2,true)}" update="frmPrincipal:messages frmPrincipal frmPrincipal:dt_pro " rendered="#{solicitudBean.cheques.idcheques!=null}" style="#{solicitudBean.cheques.estado==1?'':'display:none'}; margin-right: 1%;" styleClass="Fright">
+                    <p:confirm header="Confirmación" message="¿Está seguro/a que desea generar cheque?"  />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="400">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"/>
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes"/>
+                </p:confirmDialog>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

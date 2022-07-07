@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 20, 2016 2:19:09 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="idac.siaga.pojos.Documentos" table="documentos" catalog="siaga">
+        <id name="iddocumentos" type="java.lang.Integer">
+            <column name="iddocumentos" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="250" not-null="true">
+                <comment>Nombre con el que se almacena el documento</comment>
+            </column>
+        </property>
+        <property name="idclasificaciondoc" type="java.lang.Integer">
+            <column name="idclasificaciondoc">
+                <comment>Relacion del documento con la tabla de clasificaciones, donde estan definidos sus atributos</comment>
+            </column>
+        </property>
+        <property name="fechamodificacion" type="timestamp">
+            <column name="fechamodificacion" length="19" />
+        </property>
+        <property name="habilitado" type="boolean">
+            <column name="habilitado" not-null="true">
+                <comment>Establece si el conjunto de registro estan habilitados</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
